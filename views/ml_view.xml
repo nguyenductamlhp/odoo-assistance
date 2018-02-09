@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_machine_learning_form" model="ir.ui.view">
+        <field name="name">view.machine.learning.form</field>
+        <field name="model">machine.learning</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <button string="Generate Tag" type="object" name="generate_tag"/>
+                    <button string="Generate json file" type="object" name="parse_data_to_json"/>
+                    <group>
+                        <field name="name" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <menuitem id="menu_machine_learning_root" name="Machine Learning"/>
+    
+    <record id="action_machine_learning" model="ir.actions.act_window">
+        <field name="name">ML</field>
+        <field name="res_model">machine.learning</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="menu_machine_learning" name="ML"
+        action="action_machine_learning" 
+        parent="menu_machine_learning_root"/>
+
+</odoo>
+

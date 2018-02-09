@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/ubuntu/workspace/odoo10/my-odoo-apps/tensorflow_chatbot/data/model.tflearn"
+all_model_checkpoint_paths: "/home/ubuntu/workspace/odoo10/my-odoo-apps/tensorflow_chatbot/data/model.tflearn"

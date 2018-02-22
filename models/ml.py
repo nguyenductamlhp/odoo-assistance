@@ -3,6 +3,7 @@
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+import os
 import json
 
 
@@ -23,7 +24,6 @@ class ML(models.Model):
         response_env = self.env['message.response']
         
         acts = act_env.search([])
-        print ">>> acts", acts
         for act in acts:
             print act.id, act.name
             # create pattern
@@ -66,8 +66,14 @@ class ML(models.Model):
             }
             intents.append(item)
         dict['intents'] = intents
-        file = "my-odoo-apps/tensorflow_chatbot/intents.json"
-        with open(file, 'wb') as outfile:
+        
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)))
+        print "path", path, type(path)
+        lst_dir = []
+        lst_dir = path.split('/')
+        lst_dir.pop()
+        file_path = '/'.join(lst_dir) + '/intents.json'
+        with open(file_path, 'wb') as outfile:
             json.dump(dict, outfile)
         # with open(file) as infile:
         #     data = json.load(infile)

@@ -11,6 +11,7 @@ import random
 
 import pickle
 import json
+import os
 
 from odoo import models, fields, api
 
@@ -24,16 +25,20 @@ class TfPredicter(models.Model):
 
     @api.onchange('pattern')
     def onchange_pattern(self):
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)))
+        lst_dir = []
+        lst_dir = path.split('/')
+        module_path = '/'.join(lst_dir) + '/'
         if not self.pattern:
             return
 
-        data = pickle.load(open("my-odoo-apps/tensorflow_chatbot/data/training_data", "rb" ))
+        data = pickle.load(open(module_path + "data/training_data", "rb" ))
         words = data['words']
         classes = data['classes']
         train_x = data['train_x']
         train_y = data['train_y']
 
-        with open('my-odoo-apps/tensorflow_chatbot/intents.json') as json_data:
+        with open(module_path + 'intents.json') as json_data:
             intents = json.load(json_data)
 
         net = tflearn.input_data(shape=[None, len(train_x[0])])
@@ -42,7 +47,7 @@ class TfPredicter(models.Model):
         net = tflearn.fully_connected(net, len(train_y[0]), activation='softmax')
         net = tflearn.regression(net, optimizer='adam', loss='categorical_crossentropy')
 
-        model = tflearn.DNN(net, tensorboard_dir='my-odoo-apps/tensorflow_chatbot/data/tflearn_logs')
+        model = tflearn.DNN(net, tensorboard_dir=module_path + 'data/tflearn_logs')
 
         def clean_up_sentence(sentence):
             sentence_words = nltk.word_tokenize(sentence)
@@ -66,7 +71,7 @@ class TfPredicter(models.Model):
             return(np.array(bag))
 
         # load model
-        model.load('my-odoo-apps/tensorflow_chatbot/data/model.tflearn')
+        model.load(module_path + 'data/model.tflearn')
 
         # data structure to hold user context
         context = {}

@@ -8,6 +8,7 @@ import numpy as np
 import tflearn
 import tensorflow as tf
 import random
+import os
 
 import json
 with open('intents.json') as json_data:

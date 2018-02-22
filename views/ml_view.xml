@@ -9,6 +9,7 @@
                 <sheet>
                     <button string="Generate Tag" type="object" name="generate_tag"/>
                     <button string="Generate json file" type="object" name="parse_data_to_json"/>
+                    <button string="Training" type="object" name="training"/>
                     <group>
                         <field name="name" />
                     </group>
